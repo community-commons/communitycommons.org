@@ -1,0 +1,15 @@
+<form role="form" action="add/save/<%= type %>" method="POST" class="form-horizontal form-bordered" id="validateForm">
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-sm-3 to-right" for="control_name">Name</label>
+            <div class="col-sm-7">
+                <input type="text" id="control_name" class="form-control" placeholder="Enter a name" name="name">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-7">
+            <button class="btn btn-theme" type="submit">Save <%= type %></button>        
+        </div>
+    </div>
+</form>

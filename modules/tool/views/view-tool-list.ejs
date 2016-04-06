@@ -1,0 +1,13 @@
+<div class="row">
+  <% tools.forEach(function (t) { %>
+    <div class="col-sm-4" style="display: inline-block;" data-bound="">
+        <div class="ec-box">
+            <div class="ec-box-header"><a href="/tools/<%= t.id %>"><%= t.title %></a></div>
+            <a href="/tools/<%= t.id %>"><img src="<%= t.screenshot %>" alt="" class="img-responsive"></a>
+            <div class="ec-box-footer">
+                <a href="/tools/<%= t.id %>" class="btn btn-ar btn-success btn-sm pull-right"><i class="fa fa-arrow-right"></i> View</a>
+            </div>
+        </div>
+    </div>
+  <% }) %>
+</div>

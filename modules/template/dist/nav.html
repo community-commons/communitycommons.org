@@ -1,0 +1,71 @@
+<nav class="navbar navbar-default navbar-dark yamm navbar-static-top" role="navigation" id="header">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars"></i>
+            </button>
+            <a id="ar-brand" class="navbar-brand" href="/">Community Commons</a>
+        </div> <!-- navbar-header -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a class="" href="http://ccapps.seacondev.com" class=""><span class="label label-success">Apps</span></a>
+                </li>
+                <li class="">
+                    <a href="/people" class="">People</a>
+                </li>
+                <li class="">
+                    <a href="/places" class="">Places</a>
+                </li>
+                <li class="">
+                    <a href="/possibilities" class="">Possibilities</a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">I'm Looking For...</a>
+                     <ul class="dropdown-menu dropdown-menu-left animated-2x animated fadeIn">
+                        <li><a href="/data">Data</a></li>
+                        <li><a href="/geodata">Maps</a></li>
+                        <li><a href="/metrics">Metrics</a></li>
+                        <li><a href="/tools">Tools</a></li>
+                        <li><a href="/organizations">Organizations</a></li>
+                        <li><a href="/initiatives">Initiatives</a></li>
+                        <li><a href="/influencers">Influencers</a></li>
+                    </ul>
+                </li>
+                <% if(typeof req != "undefined" && req.user) { %>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="fa fa-user"></i></a>
+                     <ul class="dropdown-menu dropdown-menu-left animated-2x animated fadeIn">
+                        <li><a href="/workbook">Workbook</a></li>
+                        <li><a href="/profile">Profile</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="/logout" class=""><i class="fa fa-sign-out"></i></a>
+                </li>
+                <% } else { %>
+                <li class="">
+                    <a href="/login" class=""><i class="fa fa-sign-in"></i></i></a>
+                </li>
+                <% } %> 
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-search"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-search-box animated fadeInUp">
+                        <form role="form">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-ar btn-primary" type="button">Go!</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </form>
+                    </div>
+                </li>
+             </ul>
+        </div><!-- navbar-collapse -->
+    </div><!-- container -->
+</nav>

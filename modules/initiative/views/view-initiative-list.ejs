@@ -1,0 +1,45 @@
+<% initiatives.forEach(function(i, index) { %>
+  <div class="content-box box-default">
+      <div class="row">
+          <div class="col-md-4">
+              <div id="<%= index %>_map" style="width: 100%; height: 150px;"></div>
+              <script>
+                  $(function() {
+                    L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YWRhc2giLCJhIjoiR2VMSDVvdyJ9.p29kVF2Ee7T9U7F8E8B6Kg';
+                    var map = L.mapbox.map('<%= index %>_map', 'mapbox.streets', {
+                        zoomControl: false
+                      })
+                      .setView([<%= i.latitude %>, <%= i.longitude %>], 9);
+                      L.mapbox.featureLayer({
+                          // this feature is in the GeoJSON format: see geojson.org
+                          // for the full specification
+                          type: 'Feature',
+                          geometry: {
+                              type: 'Point',
+                              // coordinates here are in longitude, latitude order because
+                              // x, y is the standard for GeoJSON and many formats
+                              coordinates: [
+                                <%= i.longitude %>,
+                                <%= i.latitude %> 
+                              ]
+                          },
+                          properties: {
+                              title: '<%= i.name %>',
+                          }
+                      }).addTo(map);
+                      map.dragging.disable();
+                      map.touchZoom.disable();
+                      map.doubleClickZoom.disable();
+                      map.scrollWheelZoom.disable();
+                      map.keyboard.disable();
+                  })
+              </script>
+          </div>
+          <div class="col-md-8">
+              <h4 class="content-box-title"><%= i.name %></h4>
+              <p><%= i.description.substr(0,200) %>...</p>
+              <a href="/initiatives/<%= i.id %>" class="btn btn-ar btn-primary">Explore</a>
+          </div>
+      </div>
+  </div>
+<% }) %>

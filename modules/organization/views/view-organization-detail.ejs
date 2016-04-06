@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
+                <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+                <li><a href="#map" data-toggle="tab">Connections Map</a></li>
+                <li><a href="#activity" data-toggle="tab">Activity</a></li>
+                <ul class="nav navbar-nav navbar-right" style="margin-right: 0px;">
+                    <li><i style="font-size: 2em; margin-right: 10px; margin-top: 7px;" onclick="$(this).toggleClass('fa-star-o').toggleClass('fa-star');" class="fa fa-star-o"></i></li>
+                    <li><button class="button button-primary">Share</button></li>
+                </ul>   
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="info">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="location-map" style="height: 300px; width: 100%;"></div>
+                            <script>
+                            $(function() {
+                              L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YWRhc2giLCJhIjoiR2VMSDVvdyJ9.p29kVF2Ee7T9U7F8E8B6Kg';
+                              var map = L.mapbox.map('location-map', 'mapbox.streets')
+                                .setView([<%= organization.latitude %>, <%= organization.longitude %>], 9);
+                                L.mapbox.featureLayer({
+                                    // this feature is in the GeoJSON format: see geojson.org
+                                    // for the full specification
+                                    type: 'Feature',
+                                    geometry: {
+                                        type: 'Point',
+                                        // coordinates here are in longitude, latitude order because
+                                        // x, y is the standard for GeoJSON and many formats
+                                        coordinates: [
+                                          <%= organization.longitude %>,
+                                          <%= organization.latitude %> 
+                                        ]
+                                    },
+                                    properties: {
+                                        title: '<%= organization.name %>',
+                                    }
+                                }).addTo(map);
+                            })
+                            </script>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default portfolio-item-panel">
+                                <div class="panel-heading">Organization Details</div>
+                                <div class="panel-body">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Name</strong> <%= organization.name %></li>
+                                        <li><strong>Website</strong> <a href="<%= organization.website %>"><%= organization.website %></a></li>
+                                        <li><strong>Community</strong> <a href="/places/<%= organization.city %>, <%= organization.state %>"><%= organization.city %>, <%= organization.state %></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="right-line">Connected Initiatives</h2>
+                        </div>
+                        <% initiatives.forEach(function(i) { %>
+                            <div class="col-md-3">
+                                <a href="/initiatives/<%= i._id %>" >
+                                    <%= i.name %> in <%= i.city %>, <%= i.state %>
+                                </a>
+                            </div>
+                        <% }) %>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="right-line">Connected Influencers</h2>
+                        </div>
+                        <% influencers.forEach(function(i) { %>
+                            <div class="col-md-3">
+                                <a href="/influencers/<%= i.id %>" >
+                                    <img src="http://www.gravatar.com/avatar/<%= i.emailHash %>?s=200" alt="" class="img-responsive">
+                                </a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+                <div class="tab-pane active" id="map" style="position: relative; min-height: 400px; width: 100%; ">
+                    <div id="connections-map" style="height: 400px; width: 100%; position: absolute;"></div>
+                    <script>
+                    $(function() {
+                      var initiatives = <%- JSON.stringify(initiatives) %>;
+                      console.log('initiatives', initiatives)
+                      L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YWRhc2giLCJhIjoiR2VMSDVvdyJ9.p29kVF2Ee7T9U7F8E8B6Kg';
+                      var map = L.mapbox.map('connections-map', 'mapbox.streets')
+                          .setView([<%= organization.latitude %>, <%= organization.longitude %>], 9);
+                      initiatives.forEach(function(i) {
+                        L.mapbox.featureLayer({
+                                    // this feature is in the GeoJSON format: see geojson.org
+                                    // for the full specification
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                // coordinates here are in longitude, latitude order because
+                                // x, y is the standard for GeoJSON and many formats
+                                coordinates: [
+                                  i.longitude,
+                                  i.latitude
+                                ]
+                            },
+                            properties: {
+                                title: i.name,
+                            }
+                        }).addTo(map);
+                      })
+                      setTimeout(function() {
+                        $("#map").removeClass("active")
+                    }, 500)
+                    })
+                    </script>
+                </div>
+                <div class="tab-pane" id="activity">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <dl class="dl-horizontal">
+                                <dt><%= moment().format("LL") %></dt>
+                                <dd>User updated organization information</dd>
+                                <dt><%= moment("4/1/2016").format("LL") %></dt>
+                                <dd>Organization created</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+    </div>
+    
+</div>

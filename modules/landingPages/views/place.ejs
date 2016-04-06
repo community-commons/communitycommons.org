@@ -1,0 +1,34 @@
+
+<div class="row">
+  <div class="col-md-12" style="min-height: 500px;">
+    <div id="place-map" style="height: 500px; width: 100%; position: absolute;"></div>
+    <script>
+    $(function() {
+      L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YWRhc2giLCJhIjoiR2VMSDVvdyJ9.p29kVF2Ee7T9U7F8E8B6Kg';
+      var map = L.mapbox.map('place-map', 'mapbox.streets')
+          .setView([<%= community.latitude %>, <%= community.longitude %>], 9);
+          var initiatives = <%- JSON.stringify(initiatives) %>;
+
+            initiatives.forEach(function(i) {
+              L.mapbox.featureLayer({
+                          // this feature is in the GeoJSON format: see geojson.org
+                          // for the full specification
+                  type: 'Feature',
+                  geometry: {
+                      type: 'Point',
+                      // coordinates here are in longitude, latitude order because
+                      // x, y is the standard for GeoJSON and many formats
+                      coordinates: [
+                        i.longitude,
+                        i.latitude
+                      ]
+                  },
+                  properties: {
+                      title: i.name,
+                  }
+              }).addTo(map);
+            })
+    })
+    </script>
+  </div>
+</div>

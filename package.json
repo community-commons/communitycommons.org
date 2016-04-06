@@ -1,0 +1,121 @@
+{
+  "name": "@community-commons/communitycommons.org",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "pretest": "./node_modules/forever/bin/forever stopall && NODE_ENV=test PORT=3001 ./node_modules/forever/bin/forever start index.js && sleep 15",
+    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-register -R spec modules/**/test/*",
+    "posttest": "./node_modules/forever/bin/forever stop index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/community-commons/communitycommons.org.git"
+  },
+  "engines": {
+    "node": "~4.2.1"
+  },
+  "dependencies": {
+    "@nxus/admin-ui": "^2.4.0-5",
+    "@nxus/base-ui": "^2.4.0-3",
+    "@nxus/clientjs": "^2.4.0-2",
+    "@nxus/core": "^2.4.0-0",
+    "@nxus/data-loader": "^2.4.0-0",
+    "@nxus/mailer": "^2.4.0-0",
+    "@nxus/renderer": "^2.4.0-0",
+    "@nxus/rest-api": "^2.4.0-0",
+    "@nxus/router": "^2.4.0-1",
+    "@nxus/searcher": "^2.4.0-0",
+    "@nxus/storage": "^2.4.0-0",
+    "@nxus/templater": "^2.4.0-0",
+    "@nxus/users": "^2.4.0-1",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.5.0",
+    "babel-register": "^6.3.13",
+    "bluebird": "^3.1.1",
+    "crypto-md5": "^1.0.0",
+    "csv-parse": "^1.0.2",
+    "forever": "^0.15.1",
+    "geojson-extent": "^0.3.2",
+    "mapbox-gl": "^0.15.0",
+    "md5": "^2.0.0",
+    "moment": "^2.11.1",
+    "react": "^0.14.7",
+    "react-chartjs": "^0.7.3",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
+    "reproject": "^1.1.0",
+    "sails-mongo": "^0.11.5",
+    "terraformer-arcgis-parser": "^1.0.4",
+    "traverse": "^0.6.6",
+    "underscore": "^1.8.3",
+    "waterline-elasticsearch": "git+https://github.com/seabourne/waterline-elasticsearch.git#master"
+  },
+  "devDependencies": {
+    "bluebird": "^3.2.1",
+    "@nxus/tester": "^2.4.0-0",
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.17.2"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/community-commons/communitycommons.org/issues"
+  },
+  "homepage": "https://github.com/community-commons/communitycommons.org#readme",
+  "config": {
+    "dev": {
+      "baseUrl": "ccv3.seacondev.com",
+      "siteName": "CC.org Admin",
+      "ignore": [
+        "modules/**/js/**",
+        "assets/js/**"
+      ],
+      "mandrill": {
+        "api_key": ""
+      },
+      "storage": {
+        "modelsDir": "./models",
+        "adapters": {
+          "default": "sails-mongo",
+          "searcher": "waterline-elasticsearch"
+        },
+        "connections": {
+          "default": {
+            "adapter": "default",
+            "url": "mongodb://localhost/cc-v3-poc"
+          },
+          "searcher": {
+            "adapter": "searcher",
+            "host": "http://paas:2757d2403191f59aba05ad7354c9903e@dori-us-east-1.searchly.com",
+            "log": "error",
+            "index": "searcher"
+          }
+        }
+      },
+      "restapi": {},
+      "clientjs": {
+        "babel": {
+          "presets": [
+            "react",
+            "es2015"
+          ],
+          "plugins": [
+            "transform-object-rest-spread"
+          ]
+        }
+      },
+      "host": "localhost"
+    }
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}

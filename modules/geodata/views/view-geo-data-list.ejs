@@ -1,0 +1,13 @@
+<div class="row">
+  <% insts.forEach(function(d) { %>
+    <div class="col-md-4">
+      <div class="content-box box-default">
+        <a href="/geo-data/<%= d.id %>">
+          <span class="icon-ar icon-ar-lg icon-ar-inverse icon-ar-circle"><i class="fa fa-map"></i></span>
+          <h5 class="content-box-title"><%= d.title %></h5>
+          <p><%= d.description %>.</p>
+        </a>
+      </div>
+  </div>  
+  <% }) %>
+</div>

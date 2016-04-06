@@ -1,0 +1,170 @@
+<header id="header-full">
+    <div class="wrap-primary">
+        <div class="container">
+            <h1 class="head-title animated bounceInDown animation-delay-8">Community Commons 3.0</h1>
+            <h2 class="secondary-color text-center head-subtitle animated fadeInUp animation-delay-14">People, data &amp; tools improving outcomes together.</h2>
+            <p class="lead text-center animated fadeInUp animation-delay-14">Community Commons is a collaboratively built community resource powered by the people who are making communities better every day.</p>
+            <div class="row header-full-icons text-center">
+                <div class="col-sm-4 animated fadeInDown animation-delay-19">
+                    <span class="icon-ar icon-ar-circle icon-ar-xl-lg icon-ar-white icon-ar-inverse"><i class="fa fa-search"></i></span>
+                    <h3>Find</h3>
+                    <p class="text-center">Reach influencers for positive change.</p>
+                </div>
+                <div class="col-sm-4 animated fadeInDown animation-delay-21">
+                    <span class="icon-ar icon-ar-circle icon-ar-xl-lg icon-ar-white icon-ar-inverse"><i class="fa fa-eye"></i></span>
+                    <h3>Explore</h3>
+                    <p class="text-center">Discover initiatives improving communities</a></p>
+                </div>
+                <div class="col-sm-4 animated fadeInDown animation-delay-22">
+                    <span class="icon-ar icon-ar-circle icon-ar-xl-lg icon-ar-white icon-ar-inverse"><i class="fa fa-star"></i></span>
+                    <h3>Learn</h3>
+                    <p class="text-center">Learn about tools and best-practices for organizing your community.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="wrap-dark-color margin-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 feature-container">
+                <a href="/initiatives" class="feature-icon">
+                    <i class="fa fa-map-marker"></i>
+                    <h4><strong>345</strong> Initiatives</h4>
+                </a>
+                <a href="/organizations" class="feature-icon">
+                    <i class="fa fa-building"></i>
+                    <h4><strong>1009</strong> Organizations</h4>
+                </a>
+                <a href="/influencers" class="feature-icon">
+                    <i class="fa fa-users"></i>
+                    <h4><strong>498</strong> Influencers</h4>
+                </a>
+                <a href="/data" class="feature-icon">
+                    <i class="fa fa-bar-chart"></i>
+                    <h4><strong>85</strong> Data, Maps and Tools</h4>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-full">
+  <div class="container">
+    <!-- START Section Header -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center">
+          <h1 class="section-title font-alt mb25">Mapping the Movement</h1>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-12">
+        <div id="mtm-main" style="height: 400px; width: 100%;"></div>
+        <script>
+        $(function() {
+          var initiatives = <%- JSON.stringify(bigInitiatives) %>;
+          L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YWRhc2giLCJhIjoiR2VMSDVvdyJ9.p29kVF2Ee7T9U7F8E8B6Kg';
+          var map = L.mapbox.map('mtm-main')
+              .setView([35, -90], 4)
+              .addLayer(L.mapbox.tileLayer('mapbox.streets'));
+          var markers = new L.MarkerClusterGroup({ showCoverageOnHover: false });
+          for (var i = 0; i < initiatives.length; i++) {
+            var a = initiatives[i];
+            var title = a.name;
+            var marker = L.marker(new L.LatLng(a.latitude, a.longitude), {
+              icon: L.mapbox.marker.icon({}),
+              title: title,
+            });
+            marker.bindPopup("<a class='trigger' href='/initiatives/"+a.id+"'>"+title+"</a>");
+            markers.addLayer(marker);
+          }         
+          map.addLayer(markers);
+          // $('#map').on('click', '.trigger', function(e) {
+          //     alert('Hello from Toronto!');
+          // });
+        })
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container margin-top">
+  <div class="row">
+      <div class="col-md-12">
+          <h2 class="right-line no-margin-bottom">Latest Updates</h2>
+      </div>
+      <div class="col-md-4">
+          <h3>Influencers</h3>
+          <% influencers.forEach(function(influencer) { %>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <i class="fa fa-user" style="font-size: 3em;"></i>
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading"><a href="/influencers/<%= influencer.id %>"><%= influencer.name %></a></h4>
+                <p>Updated on <%= moment(influencer.updatedAt).format("MM/DD/YYYY") %></p>
+              </div>
+            </div>
+          <% }) %>
+          <a class="btn btn-default" href="/influencers">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="col-md-4">
+          <h3>Organizations</h3>
+          <% organizations.forEach(function(organization) { %>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <i class="fa fa-building" style="font-size: 3em;"></i>
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading"><a href="/organizations/<%= organization.id %>"><%= organization.name %></a></h4>
+                <p>Updated on <%= moment(organization.updatedAt).format("MM/DD/YYYY") %></p>
+              </div>
+            </div>
+          <% }) %>
+          <a class="btn btn-default" href="/organizations">View All <i class="fa fa-arrow-right"></i></a>
+      </div>
+      <div class="col-md-4">
+          <h3>Initiatives</h3>
+          <% initiatives.forEach(function(initiative) { %>
+            <div class="media">
+              <a class="pull-left" href="#">
+                <i class="fa fa-map-marker" style="font-size: 3em;"></i>
+              </a>
+              <div class="media-body">
+                <h4 class="media-heading"><a href="/initiatives/<%= initiative.id %>"><%= initiative.name %></a></h4>
+                <p>Updated on <%= moment(initiative.updatedAt).format("MM/DD/YYYY") %></p>
+              </div>
+            </div>
+          <% }) %>
+          <a class="btn btn-default" href="/initiatives">View All <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <!-- START Section Header -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header text-center">
+          <h1 class="section-title font-alt mb25">I Want To...</h1>
+          <p>We can help you find the people, initiatives, tools and data to jump-start your path to collaborative change.</p>
+          <p>But first, we need to learn a little bit more about what you are trying to accomplish.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-4">
+        <h3>What type of change?</h3>
+      </div>
+      <div class="col-md-4">
+        <h3>What population and location?</h3>
+      </div>
+      <div class="col-md-4">
+        <h3>What resources do you need?</h3>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<header class="main-header">
+    <div class="container">
+        <h1 class="page-title"><%= typeof title != "undefined" ? title : "" %></h1>
+
+        <ol class="breadcrumb pull-right">
+            <li><a href="/">Home</a></li>
+            <% if(typeof section != "undefined") { %>
+            <li><a href="/"><%= section %></a></li>
+            <% } %>
+            <li class="active"><%= typeof title != "undefined" ? title : "" %></li>
+        </ol>
+    </div>
+</header>
+<section class="wrap-primary-color margin-bottom" style="margin-top: -40px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9">
+        <h3 class="font-alt text-white nm mt3">Community Commons is powered by you. See something missing?</h3>
+      </div>
+      <div class="col-sm-3 clearfix" style="margin-top: 20px;">
+        <span class="button-dropdown" data-buttons="dropdown">
+            <button class="button button-rounded btn-success text-white pull-right semibold mt3">
+                ADD IT NOW <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="button-dropdown-list" style="display: none;">
+                <li><a href="/add/initiative">Initiative</a></li>
+                <li><a href="/add/organization">Organization</a></li>
+                <li><a href="/add/influencer">Influencer</a></li>
+            </ul>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+<%- content %>

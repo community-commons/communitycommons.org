@@ -1,0 +1,16 @@
+<header class="main-header">
+    <div class="container">
+        <h1 class="page-title"><%= typeof title != "undefined" ? title : "" %></h1>
+
+        <ol class="breadcrumb pull-right">
+            <li><a href="/">Home</a></li>
+            <% if(typeof section != "undefined") { %>
+            <li><a href="<%= typeof sectionUrl != "undefined" ? sectionUrl : "" %>"><%= section %></a></li>
+            <% } %>
+            <li class="active"><%= typeof title != "undefined" ? title : "" %></li>
+        </ol>
+    </div>
+</header>
+<div class="container">
+<%- content %>
+</div>

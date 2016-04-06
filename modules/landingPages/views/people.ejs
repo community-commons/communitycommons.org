@@ -1,0 +1,36 @@
+<div class="container">
+    <h1 class="section-title text-center no-margin-top">Search for People</h1>
+    <div class="panel panel-border">
+        <div class="panel-body">
+            <div class="input-group">
+                    <input type="text" class="form-control input-lg" placeholder="Enter your search term here...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-ar btn-lg btn-primary" type="button">Search</button>
+                    </span>
+                </div><!-- /input-group -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="right-line">Latest and most popular</h2>
+        </div>
+        <div class="col-md-6">
+            <h3 class="no-margin-top">Organizations</h3>
+            <ul class="list-line">
+              <% organizations.forEach(function(org) { %>
+                <li><a href="/organizations/<%= org.id %>"><%= org.name %></a></li>
+              <% }) %>
+            </ul>
+            <a class="btn btn-default" href="/organizations">View All <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="col-md-6">
+            <h3 class="no-margin-top">Influencers</h3>
+            <ul class="list-line">
+            <% influencers.forEach(function(inf) { %>
+              <li><a href="/influencers/<%= inf.id %>"><%= inf.name %></a></li>
+            <% }) %>
+            </ul>
+            <a class="btn btn-default" href="/influencers">View All <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div> <!-- row -->
+</div>
