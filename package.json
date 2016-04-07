@@ -111,6 +111,49 @@
         }
       },
       "host": "localhost"
+    },
+    "production": {
+      "baseUrl": "ccv3.seacondev.com",
+      "siteName": "CC.org Admin",
+      "ignore": [
+        "modules/**/js/**",
+        "assets/js/**"
+      ],
+      "mandrill": {
+        "api_key": ""
+      },
+      "storage": {
+        "modelsDir": "./models",
+        "adapters": {
+          "default": "sails-mongo",
+          "searcher": "waterline-elasticsearch"
+        },
+        "connections": {
+          "default": {
+            "adapter": "default",
+            "url": "mongodb://heroku_tsl7twjz:h30o5aebb1hkv0ksd38cpkldt@ds015690.mlab.com:15690/heroku_tsl7twjz"
+          },
+          "searcher": {
+            "adapter": "searcher",
+            "host": "http://paas:2757d2403191f59aba05ad7354c9903e@dori-us-east-1.searchly.com",
+            "log": "error",
+            "index": "searcher"
+          }
+        }
+      },
+      "restapi": {},
+      "clientjs": {
+        "babel": {
+          "presets": [
+            "react",
+            "es2015"
+          ],
+          "plugins": [
+            "transform-object-rest-spread"
+          ]
+        }
+      },
+      "host": "ccv3.seacondev.com"
     }
   },
   "babel": {
