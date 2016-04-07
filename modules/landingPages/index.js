@@ -2,7 +2,7 @@
 * @Author: mike
 * @Date:   2016-04-04 15:48:28
 * @Last Modified 2016-04-06
-* @Last Modified time: 2016-04-06 10:49:30
+* @Last Modified time: 2016-04-06 16:49:54
 */
 
 'use strict';
@@ -47,16 +47,23 @@ export default class LandingPages {
   }
 
   place(req, res) {
-    this.app.get('storage').getModel(['initiative', 'community']).spread((Initiative, Community) => {
-      return [Initiative, Community.find().where({name: req.param('name')})]
-    }).spread((Initiative, [community]) => {
-      return [community, Initiative.findNear(community.latitude, community.longitude, 10000)]
-    }).spread((community, initiatives) => {
+    this.app.get('storage').getModel(['initiative', 'community', 'organization', 'influencer']).spread((Initiative, Community, Organization, Influencer) => {
+      return [Initiative, Community, Organization, Influencer, Community.find().where({name: req.param('name')})]
+    }).spread((Initiative, Community, Organization, Influencer, [community]) => {
+      return [
+        community, 
+        Initiative.findNear(community.latitude, community.longitude, 10000),
+        Organization.findNear(community.latitude, community.longitude, 10000),
+        Influencer.findNear(community.latitude, community.longitude, 10000)
+      ]
+    }).spread((community, initiatives, organizations, influencers) => {
       let opts = {
         title: req.param('name'),
         community,
         initiatives,
-        req
+        req,
+        organizations,
+        influencers
       }
       return this.app.get('templater').renderPartial(__dirname+"/views/place.ejs", "page", opts)
     }).then(res.send.bind(res))

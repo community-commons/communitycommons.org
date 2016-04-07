@@ -60,7 +60,7 @@
                         <div class="col-md-12">
                             <h2 class="right-line">Connected Initiatives</h2>
                         </div>
-                        <% initiatives.forEach(function(i) { %>
+                        <% initiatives.slice(0,4).forEach(function(i) { %>
                             <div class="col-md-3">
                                 <a href="/initiatives/<%= i._id %>" >
                                     <%= i.name %> in <%= i.city %>, <%= i.state %>

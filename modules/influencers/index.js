@@ -2,7 +2,7 @@
 * @Author: mike
 * @Date:   2016-04-03 08:13:01
 * @Last Modified 2016-04-06
-* @Last Modified time: 2016-04-06 14:07:57
+* @Last Modified time: 2016-04-06 16:52:48
 */
 
 'use strict';
@@ -14,6 +14,11 @@ import _ from 'underscore'
 
 export default (app) => {
   app.get('storage').model(Influencer)
+  app.on('startup', () => {
+    app.get('storage').getModel('influencer').then((Influencer) => {
+      Influencer.createGeoIndex()
+    })
+  })
   let ignore = ['id', 'email', 'zip', 'createdAt', 'updatedAt', 'latitude', 'longitude']
   app.get('admin-ui').adminModel('influencer', {
     iconClass: 'fa fa-user', 

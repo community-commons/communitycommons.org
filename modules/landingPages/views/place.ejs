@@ -32,3 +32,39 @@
     </script>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="right-line">Initiatives in this community</h2>
+    <div class="row">
+      <% initiatives.forEach(function(i) { %>
+        <div class="col-md-3">
+          <a href="/initiatives/<%= i._id %>"><%= i.name %></a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="right-line">Organizations in this community</h2>
+    <div class="row">
+      <% organizations.forEach(function(i) { %>
+        <div class="col-md-3">
+          <a href="/organizations/<%= i._id %>"><%= i.name %></a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="right-line">Influencers in this community</h2>
+    <div class="row">
+      <% influencers.forEach(function(i) { %>
+        <div class="col-md-3">
+          <a href="/influencers/<%= i._id %>"><%= i.name %></a>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

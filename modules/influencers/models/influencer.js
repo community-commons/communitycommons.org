@@ -1,15 +1,15 @@
 /*
 * @Author: mike
 * @Date:   2016-04-03 08:13:10
-* @Last Modified 2016-04-04eich
-* @Last Modified time: 2016-04-04 10:26:15
+* @Last Modified 2016-04-06
+* @Last Modified time: 2016-04-06 16:51:21
 */
 
 'use strict';
 
-import {BaseModel} from '@nxus/storage'
+import {PointModel} from '@nxus/storage'
 
-export default BaseModel.extend({
+export default PointModel.extend({
   identity: 'influencer',
   connection: 'default',
   attributes: {

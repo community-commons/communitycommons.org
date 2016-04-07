@@ -2,7 +2,7 @@
 * @Author: mike
 * @Date:   2016-04-03 07:44:36
 * @Last Modified 2016-04-06
-* @Last Modified time: 2016-04-06 14:19:31
+* @Last Modified time: 2016-04-06 16:53:03
 */
 
 'use strict';
@@ -11,6 +11,11 @@ import Organization from './models/organization'
 
 export default (app) => {
   app.get('storage').model(Organization)
+    app.on('startup', () => {
+    app.get('storage').getModel('organization').then((Organization) => {
+      Organization.createGeoIndex()
+    })
+  })
   let ignore = ['id', 'createdAt', 'updatedAt', 'latitude', 'longitude']
   app.get('admin-ui').adminModel('organization', {
     iconClass: 'fa fa-building', 
@@ -26,7 +31,7 @@ export default (app) => {
     opts.section = "Organizations"
     opts.sectionUrl = "/organizations"
     return app.get('storage').getModel(['initiative', 'influencer']).spread((Initiative, Influencer) => {
-      return [Initiative.findNear(opts.organization.latitude, opts.organization.longitude, 50000), Influencer.find().where().limit(4)]
+      return [Initiative.findNear(opts.organization.latitude, opts.organization.longitude, 10000), Influencer.find().where().limit(4)]
     }).spread((initiatives, influencers) => {
       opts.initiatives = initiatives
       opts.influencers = influencers
