@@ -21,7 +21,7 @@
     "@nxus/base-ui": "^2.4.0-3",
     "@nxus/clientjs": "^2.4.0-2",
     "@nxus/core": "^2.4.0-0",
-    "@nxus/data-loader": "^2.4.0-0",
+    "@nxus/data-loader": "^2.4.0-1",
     "@nxus/mailer": "^2.4.0-0",
     "@nxus/renderer": "^2.4.0-0",
     "@nxus/rest-api": "^2.4.0-0",
