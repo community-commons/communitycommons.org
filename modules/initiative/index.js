@@ -12,6 +12,8 @@ import Initiative from './models/initiative'
 import md5 from 'md5'
 import _ from 'underscore'
 
+import fetch from 'node-fetch'
+
 export default (app) => {
   app.get('storage').model(Initiative)
   app.on('startup', () => {
@@ -28,18 +30,24 @@ export default (app) => {
       identityFields: ['name']
     }
   })
+
   app.get('base-ui').viewModel('initiative', {ignore})
   app.get('templater').templateDir('ejs', __dirname+"/views")
-  app.get('templater').replace('template', 'view-initiative-detail', 'ejs', (name, opts) => {
+
+  app.get('router').replace().route('/initiatives/:id', (req, res) => {
+    let opts = {req}
     opts.section = "Initiatives"
     opts.sectionUrl = "/initiatives"
-    return app.get('storage').getModel(['organization', 'influencer']).spread((Organization, Influencer) => {
-      return [Influencer.find().where().limit(4), Organization.find().where().limit(4)]
-    }).spread((influencers, organizations) => {
-      opts.influencers = _.map(influencers, (i) => {i.emailHash = md5(i.email); return i;})
-      opts.organizations = organizations
-      return app.get('renderer').renderFile(__dirname+"/views/view-initiative-detail.ejs", opts)
-    })
+    return fetch(app.config.ccRepo+"entities/"+req.params.id+"?foreign=100mlives").then((response) => {
+      return response.json()
+    }).then((body) => {
+      opts.initiative = body.entities[0]
+      opts.initiative = _.extend(opts.initiative, opts.initiative.foreign['100mlives'])
+      opts.title = opts.initiative.name
+      opts.name = opts.initiative.name
+      opts.inst = opts.initiative
+      return app.get('templater').renderPartial(__dirname+"/views/view-initiative-detail.ejs", "default", opts)
+    }).then(res.send.bind(res))
   })
   app.get('data-loader').after('model.initiative', (identity, obj) => {
     obj = obj[0]
