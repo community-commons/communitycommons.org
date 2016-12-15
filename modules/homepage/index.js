@@ -7,9 +7,18 @@
 
 'use strict';
 
+import fetch from 'node-fetch'
+
 export default (app) => {
   app.get('router').route('/', (req, res) => {
     let limit = 3
+
+    let ccInits = fetch(app.config.ccRepo+"entities").then((response) => {
+      return response.json()
+    }).then((body) => {
+      return body.entities
+    })
+    
     app.get('storage').getModel(['influencer', 'organization', 'initiative', 'data']).spread((Influencer, Organization, Initiative, Data) => {
       return [Influencer.count().where(),
               Initiative.count().where(),
@@ -18,8 +27,9 @@ export default (app) => {
               Influencer.find().where().limit(limit),
               Initiative.find().where().limit(limit),
               Organization.find().where().limit(limit),
-              Initiative.find().where()]
+              ccInits]
     }).spread((influencersCount, initiativesCount, organizationsCount, dataCount, influencers, initiatives, organizations, bigInitiatives) => {
+      initiativesCount = bigInitiatives.length
       return app.get('templater').renderPartial(__dirname+"/views/homepage.ejs", "default", {req, influencersCount, initiativesCount, organizationsCount, dataCount, initiatives, influencers, organizations, bigInitiatives})
     }).then(res.send.bind(res))
   })

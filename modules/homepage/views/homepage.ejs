@@ -72,14 +72,21 @@
           var markers = new L.MarkerClusterGroup({ showCoverageOnHover: false });
           for (var i = 0; i < initiatives.length; i++) {
             var a = initiatives[i];
+            if (!a.areaServed) {
+                continue;
+            }
             var title = a.name;
-            var marker = L.marker(new L.LatLng(a.latitude, a.longitude), {
-              icon: L.mapbox.marker.icon({}),
-              title: title,
-            });
-            marker.bindPopup("<a class='trigger' href='/initiatives/"+a.id+"'>"+title+"</a>");
-            markers.addLayer(marker);
-          }         
+            try {
+                var marker = L.marker(L.mapbox.featureLayer(a.areaServed).getBounds().getCenter(), {
+                    icon: L.mapbox.marker.icon({}),
+                    title: title,
+                });
+                marker.bindPopup("<a class='trigger' href='/initiatives/"+a.id+"'>"+title+"</a>");
+                markers.addLayer(marker);
+            } catch (e) {
+                console.log("Bad geojson for marker:", e, a.areaServed)
+            }
+          }       
           map.addLayer(markers);
           // $('#map').on('click', '.trigger', function(e) {
           //     alert('Hello from Toronto!');
